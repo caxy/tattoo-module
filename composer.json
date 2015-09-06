@@ -1,0 +1,21 @@
+{
+    "name": "caxy/tattoo-module",
+    "description": "Drupal 7 tattoo module adds to `Drupal.settings` object the whole JSON representation of all viewed entities.",
+    "type": "drupal-module",
+    "require": {
+        "composer/installers": "^1.0"
+    },
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Benjamin Doherty",
+            "email": "bdoherty@caxy.com"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "7.0.x-dev"
+        },
+        "installer-name": "tattoo"
+    }
+}

@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * Implements hook_entity_view().
+ */
+function tattoo_entity_view($entity, $type, $view_mode, $langcode) {
+  $tattooed = &drupal_static(__FUNCTION__, array());
+  if (!isset($tattooed[$type])) {
+    $tattooed[$type] = array();
+  }
+
+  list($id, $vid, $bundle) = entity_extract_ids($type, $entity);
+
+  // Don't tattoo an entity's JSON representation more than once.
+  if (in_array($id, $tattooed[$type])) {
+    return;
+  }
+
+  // Use RESTWS module to generate an array representation of the entity.
+  $resourceController = restws_resource_controller($type);
+  $format = restws_format('json');
+  $json = $format->viewResource($resourceController, $id);
+  $array = json_decode($json, TRUE);
+  $array['_meta'] = array(
+    'type' => $type,
+    'id' => $id,
+    'revisionId' => $vid,
+    'bundle' => $bundle,
+  );
+
+  // Embed that entity's JSON in Drupal's global JS settings object.
+  $data = array(
+    'entity' => array(
+      $type => array(
+        $array
+      )
+    )
+  );
+  drupal_add_js($data, 'setting');
+  $tattooed[$type][] = $id;
+}

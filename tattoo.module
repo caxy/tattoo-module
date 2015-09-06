@@ -20,9 +20,10 @@ function tattoo($type, $entity) {
   }
 
   list($id, $vid, $bundle) = entity_extract_ids($type, $entity);
+  $key = is_null($vid) ? $id : $vid;
 
   // Don't tattoo an entity's JSON representation more than once.
-  if (in_array($id, $tattooed[$type])) {
+  if (in_array($key, $tattooed[$type])) {
     return;
   }
 
@@ -47,5 +48,5 @@ function tattoo($type, $entity) {
     )
   );
   drupal_add_js($data, 'setting');
-  $tattooed[$type][] = $id;
+  $tattooed[$type][] = $key;
 }

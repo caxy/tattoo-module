@@ -4,6 +4,16 @@
  * Implements hook_entity_view().
  */
 function tattoo_entity_view($entity, $type, $view_mode, $langcode) {
+  tattoo($type, $entity);
+}
+
+/**
+ * Main function to tattoo an entity into `Drupal.settings`.
+ *
+ * @param $type
+ * @param $entity
+ */
+function tattoo($type, $entity) {
   $tattooed = &drupal_static(__FUNCTION__, array());
   if (!isset($tattooed[$type])) {
     $tattooed[$type] = array();

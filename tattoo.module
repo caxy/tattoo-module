@@ -27,17 +27,7 @@ function tattoo($type, $entity) {
     return;
   }
 
-  // Use RESTWS module to generate an array representation of the entity.
-  $resourceController = restws_resource_controller($type);
-  $format = restws_format('json');
-  $json = $format->viewResource($resourceController, $id);
-  $array = json_decode($json, TRUE);
-  $array['_meta'] = array(
-    'type' => $type,
-    'id' => $id,
-    'revisionId' => $vid,
-    'bundle' => $bundle,
-  );
+  $array = tattoo_normalizer($type, $bundle, $id, $vid);
 
   // Embed that entity's JSON in Drupal's global JS settings object.
   $data = array(
@@ -49,4 +39,19 @@ function tattoo($type, $entity) {
   );
   drupal_add_js($data, 'setting');
   $tattooed[$type][] = $key;
+}
+
+function tattoo_normalizer($type, $bundle, $id, $vid) {
+  // Use RESTWS module to generate an array representation of the entity.
+  $resourceController = restws_resource_controller($type);
+  $format = restws_format('json');
+  $json = $format->viewResource($resourceController, $id);
+  $array = json_decode($json, TRUE);
+  $array['_meta'] = array(
+    'type' => $type,
+    'id' => $id,
+    'revisionId' => $vid,
+    'bundle' => $bundle,
+  );
+  return $array;
 }

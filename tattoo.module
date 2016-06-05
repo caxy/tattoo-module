@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Contains tattoo.module.
+ *
+ * @todo Add support for encoding default values of entity fields.
+ */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Symfony\Component\Serializer\Serializer;
+
+/**
+ * Implements hook_entity_view().
+ *
+ * @param array $build
+ * @param EntityInterface $entity
+ * @param EntityViewDisplayInterface $display
+ * @param $view_mode
+ */
+function tattoo_entity_view(
+  array &$build,
+  EntityInterface $entity,
+  EntityViewDisplayInterface $display,
+  $view_mode
+) {
+  /** @var Serializer $serializer */
+  $serializer = \Drupal::service('serializer');
+
+  // Normalize the entity so we can add more URLs to the _links array.
+  $data = $serializer->normalize($entity, 'hal_json');
+
+  // Save the unaliased URL as the shortlink.
+  $url = $entity->toUrl('canonical', ['absolute' => TRUE, 'alias' => TRUE]);
+  $url->setRouteParameter('_format', 'hal_json');
+  $data['_links']['shortlink'] = ['href' => $url->toString()];
+
+  $build['#attached']['html_head'][] = [
+    [
+      '#type' => 'html_tag',
+      '#tag' => 'script',
+      '#attributes' => [
+        'type' => 'application/hal+json',
+        'data-drupal-selector' => 'tattoo-entity',
+        'data-tattoo-entity' => $entity->getEntityTypeId() . ':' . $entity->id(),
+      ],
+      '#value' => $serializer->encode($data, 'hal_json'),
+    ],
+    'tattoo_' . $entity->getEntityTypeId() . '_' . $entity->id(),
+  ];
+}

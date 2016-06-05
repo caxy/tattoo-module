@@ -14,7 +14,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "7.0.x-dev"
+            "dev-7.x-1.x": "7.1.x-dev"
         },
         "installer-name": "tattoo"
     }

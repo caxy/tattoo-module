@@ -1,6 +1,6 @@
 tattoo:
   version: VERSION
   js:
-    js/tattoo.service.js: {}
+    js/tattoo.js: {}
   dependencies:
     - core/underscore

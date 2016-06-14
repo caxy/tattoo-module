@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Serializer;
 
 /**
  * Implement hook_page_attachments().
- * 
+ *
  * @param array $page
  */
 function tattoo_page_attachments(array &$page) {

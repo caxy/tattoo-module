@@ -12,6 +12,23 @@ use Drupal\Core\Entity\EntityInterface;
 use Symfony\Component\Serializer\Serializer;
 
 /**
+ * Implement hook_page_attachments().
+ * 
+ * @param array $page
+ */
+function tattoo_page_attachments(array &$page) {
+  if ($domain = \Drupal::config('rest.settings')->get('link_domain')) {
+    $linkDomain = rtrim($domain, '/');
+  }
+  else {
+    $request = \Drupal::request();
+    $linkDomain = $request->getSchemeAndHttpHost() . $request->getBasePath();
+  }
+
+  $page['#attached']['drupalSettings']['restLinkDomain'] = $linkDomain;
+}
+
+/**
  * Implements hook_entity_view().
  *
  * @param array $build

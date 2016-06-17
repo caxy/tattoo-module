@@ -1,0 +1,5 @@
+services:
+  tattoo.twig_extension:
+    class: Drupal\tattoo\Template\TwigExtension
+    tags:
+      - { name: twig.extension }

@@ -41,7 +41,7 @@ function tattoo_entity_view(
   EntityViewDisplayInterface $display,
   $view_mode
 ) {
-  $config = \Drupal::config('tattoo.settings')->get('entity_types.'. $entity->getEntityTypeId());
+  $config = \Drupal::config('tattoo.settings')->get('entity_type.'. $entity->getEntityTypeId());
 
   if ($config && in_array($entity->bundle(), $config)) {
     /** @var \Drupal\tattoo\Parlor $parlor */

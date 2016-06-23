@@ -9,7 +9,6 @@
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * Implement hook_page_attachments().

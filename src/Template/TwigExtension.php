@@ -5,8 +5,19 @@ namespace Drupal\tattoo\Template;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\tattoo\Parlor;
 
 class TwigExtension extends \Twig_Extension {
+
+  /**
+   * @var \Drupal\tattoo\Parlor
+   */
+  private $parlor;
+
+  public function __construct(Parlor $parlor) {
+
+    $this->parlor = $parlor;
+  }
 
   /**
    * Returns the name of the extension.
@@ -24,11 +35,6 @@ class TwigExtension extends \Twig_Extension {
   }
 
   public function tattoo(EntityInterface $entity) {
-    $build = [];
-    $view_mode = 'default';
-    /** @var EntityViewDisplayInterface $display */
-    $display = EntityViewDisplay::load($entity->getEntityTypeId().'.'.$entity->bundle().'.'.$view_mode);
-    tattoo_entity_view($build, $entity, $display, $view_mode);
-    return $build;
+    return ['#attached' => ['html_head' => [$this->parlor->toHead($entity)]]];
   }
 }

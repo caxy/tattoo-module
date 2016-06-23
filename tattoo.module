@@ -42,28 +42,12 @@ function tattoo_entity_view(
   EntityViewDisplayInterface $display,
   $view_mode
 ) {
-  /** @var Serializer $serializer */
-  $serializer = \Drupal::service('serializer');
+  $config = \Drupal::config('tattoo.settings')->get('entity_types.'. $entity->getEntityTypeId());
 
-  // Normalize the entity so we can add more URLs to the _links array.
-  $data = $serializer->normalize($entity, 'hal_json');
+  /** @var \Drupal\tattoo\Parlor $parlor */
+  $parlor = \Drupal::service('tattoo.parlor');
 
-  // Save the unaliased URL as the shortlink.
-  $url = $entity->toUrl('canonical', ['absolute' => TRUE, 'alias' => TRUE]);
-  $url->setRouteParameter('_format', 'hal_json');
-  $data['_links']['shortlink'] = ['href' => $url->toString()];
-
-  $build['#attached']['html_head'][] = [
-    [
-      '#type' => 'html_tag',
-      '#tag' => 'script',
-      '#attributes' => [
-        'type' => 'application/hal+json',
-        'data-drupal-selector' => 'tattoo-entity',
-        'data-tattoo-entity' => $entity->getEntityTypeId() . ':' . $entity->id(),
-      ],
-      '#value' => $serializer->encode($data, 'hal_json'),
-    ],
-    'tattoo_' . $entity->getEntityTypeId() . '_' . $entity->id(),
-  ];
+  if ($config && in_array($entity->bundle(), $config)) {
+    $build['#attached']['html_head'][] = $parlor->toHead($entity);
+  }
 }

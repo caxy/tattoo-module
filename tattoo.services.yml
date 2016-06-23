@@ -1,5 +1,10 @@
 services:
+  tattoo.parlor:
+    class: Drupal\tattoo\Parlor
+    arguments: ['@serializer']
+
   tattoo.twig_extension:
     class: Drupal\tattoo\Template\TwigExtension
+    arguments: ['@tattoo.parlor']
     tags:
       - { name: twig.extension }

@@ -43,10 +43,10 @@ function tattoo_entity_view(
 ) {
   $config = \Drupal::config('tattoo.settings')->get('entity_types.'. $entity->getEntityTypeId());
 
-  /** @var \Drupal\tattoo\Parlor $parlor */
-  $parlor = \Drupal::service('tattoo.parlor');
-
   if ($config && in_array($entity->bundle(), $config)) {
+    /** @var \Drupal\tattoo\Parlor $parlor */
+    $parlor = \Drupal::service('tattoo.parlor');
+
     $build['#attached']['html_head'][] = $parlor->toHead($entity);
   }
 }

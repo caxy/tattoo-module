@@ -2,8 +2,6 @@
 
 namespace Drupal\tattoo\Template;
 
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\tattoo\Parlor;
 

@@ -1,5 +1,6 @@
 name: Tattoo
 type: module
 core: 8.x
+configure: tattoo.admin_settings
 dependencies:
   - hal

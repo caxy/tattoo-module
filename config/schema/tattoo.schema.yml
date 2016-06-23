@@ -1,0 +1,16 @@
+tattoo.settings:
+  type: config_object
+  label: 'Tattoo settings'
+  mapping:
+    entity_type:
+      type: sequence
+      label: 'Entity types'
+      sequence:
+        type: tattoo.entity_type.[%key]
+        label: 'Entity type'
+
+tattoo.entity_type.*:
+  type: sequence
+  sequence:
+    type: string
+    label: 'Bundle'

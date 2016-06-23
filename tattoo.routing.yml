@@ -1,0 +1,9 @@
+tattoo.admin_settings:
+  path: '/admin/config/services/tattoo'
+  defaults:
+    _form: '\Drupal\tattoo\Form\SettingsForm'
+    _title: 'Tattoo settings'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE

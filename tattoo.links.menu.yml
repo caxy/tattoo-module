@@ -1,0 +1,5 @@
+tattoo.admin_settings:
+  title: 'Tattoo settings'
+  route_name: tattoo.admin_settings
+  description: 'Tattoo settings'
+  parent: system.admin_config_services

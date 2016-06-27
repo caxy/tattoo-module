@@ -4,3 +4,11 @@ tattoo:
     js/tattoo.js: {}
   dependencies:
     - core/underscore
+
+tattoo.ajax:
+  js:
+    js/tattoo.ajax.js: {}
+  dependencies:
+    - core/underscore
+    - core/drupal.ajax
+    - tattoo/tattoo

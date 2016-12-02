@@ -2,7 +2,7 @@
  * @file
  * Parse inline HAL-JSON representations of Drupal entities for tattoo global array.
  */
-(function () {
+(function (_) {
   'use strict';
 
   // Use direct child elements to harden against XSS exploits when CSP is on.
@@ -35,4 +35,4 @@
       });
     }
   };
-})();
+})(_);
